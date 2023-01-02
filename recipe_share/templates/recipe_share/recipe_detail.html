@@ -1,0 +1,27 @@
+{% extends "recipe_share/base.html" %}
+{% block content %}
+<article class="media content-section">
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="#">{{ recipe.author }}</a>
+        <small class="text-muted">{{ recipe.date_posted|date:"F d, Y" }}</small>
+        {% if recipe.author == user%}
+        <button class="btn btn-outline-info"><a href="{% url 'recipe_share-update' recipe.id %}">Edit Post</a></button>
+        <button class="btn btn-outline-danger"><a href="{% url 'recipe_share-delete' recipe.id %}">Delete Post</a></button>
+        {% endif %}
+      </div>
+      <h2 class="article-title"> {{ recipe.recipe_name }}</h2>
+      <img class="img_food account-img" src="{{ recipe.recipe_pic.url }}">
+        <div class="container">
+          <form action="{% url 'like-recipe' recipe.pk %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" name="recipe_id" value="{{ recipe.id }}" class="btn btn-success btn-sm">
+                Like Recipe
+              </button> - {{ recipe.total_likes }}
+          </form>
+          <hr>
+        </div>
+      <p class="article-content">{{ recipe.recipe_description }}</p>
+    </div>
+  </article>
+{% endblock content %}

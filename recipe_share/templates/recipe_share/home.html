@@ -1,0 +1,18 @@
+{% extends "recipe_share/base.html" %}
+{% block content %}
+{% for recipe in recipes %}
+<article class="media content-section">
+      <div class="media-body">
+        <div class="article-metadata">
+          <a class="mr-2" href="#">{{ recipe.author }}</a>
+          <small class="text-muted">{{ recipe.date_posted|date:"F d, Y" }}</small>
+        </div>
+        <h2><a class="article-title" href="{% url 'recipe_share-detail' recipe.id %}">{{ recipe.recipe_name }}</a></h2>
+        <img class="img_food account-img" src="{{ recipe.recipe_pic.url }}">
+        <p class="article-content">Cook time: {{ recipe.time_to_prep }}</p>
+      </div>
+    </article>
+
+{% endfor %}
+
+{% endblock content%}
